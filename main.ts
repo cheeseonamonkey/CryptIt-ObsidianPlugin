@@ -18,15 +18,9 @@ export default class MyPlugin extends Plugin {
 	async onload() {
 		await this.loadSettings();
 		
-		addIcon("mykeyicon",
-		`<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-		<circle cx="8" cy="15" r="4" />
-		<line x1="10.85" y1="12.15" x2="19" y2="4" />
-		<line x1="18" y1="5" x2="20" y2="7" />
-		<line x1="15" y1="8" x2="17" y2="10" />`);
 
 		// This creates an icon in the left ribbon.
-		const ribbonIconEl = this.addRibbonIcon('mykeyicon',
+		const ribbonIconEl = this.addRibbonIcon('blocks',
 		'Sample Plugin', 
 		(evt: MouseEvent) =>
 		{
@@ -41,18 +35,13 @@ export default class MyPlugin extends Plugin {
 			//open modal for password:
 			new MyInputModal(this.app, (result) =>
 			{
-				//after password is entered...
-				enteredPassword = result;
-				console.log('entered: ' + enteredPassword);
+				//callback after password is entered
 
-				let hash = crypto.createHash('md5', enteredPassword).digest('hex');
-				hash = hash.substring(0,16);
-				console.log('hashed key from password - ' + hash); 
-							
-				//let salt = crypto.randomBytes(128).toString('base64');
 				
+				let hash = crypto.createHash('md5', result).digest('hex').substring(0,16);
+
+				//console.log('hashed key from password - ' + hash);
 				
-				console.log('you are here');
 
 				const iv = crypto.randomBytes(16);
 				const text = "this is a message from alex."; 
@@ -78,7 +67,6 @@ export default class MyPlugin extends Plugin {
 						
 						let decText = decipher.update(encText, 'hex', 'utf8');
 						console.log('decrypted text: ' + decText);
-				 
 				
 								
 							}catch(e) {
