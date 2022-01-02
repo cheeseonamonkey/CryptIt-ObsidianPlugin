@@ -6,6 +6,7 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import { BasePrivateKeyEncodingOptions } from 'crypto';
 import { App, Editor, MarkdownView, Modal, addIcon, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import { Buffer } from 'buffer';
 
 // Remember to rename these classes and interfaces!
 
@@ -34,6 +35,7 @@ export default class MyPlugin extends Plugin {
 			//this is called when the user clicks the icon
 
 			const utf8 = require('utf8');
+			const base64 = require('base-64');
 			const crypto = require('crypto');
 
 			const aesAlgorithm = "aes-128-gcm";
@@ -85,14 +87,17 @@ export default class MyPlugin extends Plugin {
 				try {
 				
 						//console.log('unencrypted text - ' + text + "\n");
-						console.log("1");
+						
 					hash = crypto.createHash('md5', result).digest('hex').substring(0,16);
 						//console.log('hashed key from password - ' + hash);
 
 					//random
 					let iv = crypto.randomBytes(16);
-						//console.log('iv - ' + iv);
+						console.log('ivstart---');
+
+					let fileKey = iv.toString('hex');
 						
+						 
 					switch(mode) {
 						
 						//encrypt button pressed
@@ -103,17 +108,21 @@ export default class MyPlugin extends Plugin {
 
 							//encrypt the text:
 							let encText = cipher.update(text, 'utf8', 'hex');
+							encText = encText.trim();
 							//encText += cipher.final();
 
-							console.log('encrypted text: ' + encText);
+							console.log('encrypted text: ' + encText); 
+
+							//writing fileKey to document
+							encText = "\n%% fileKey-" + fileKey + " %%\n\n" + encText; 
 
 							//editor actions: 
-							view.editor.replaceSelection(encText, selection);
+							view.editor.replaceSelection(encText,  selection);
 
 							new Notice('Encrypted', 1);
-						
+						  
 							if(result != null) {
-								result = null;
+								result = null; 
 							}
 							if(hash != null) {
 								hash = null;
@@ -126,7 +135,7 @@ export default class MyPlugin extends Plugin {
 							}
 							if(text != null) {
 								text = null;
-							}
+							} 
 							
 
 
@@ -137,6 +146,29 @@ export default class MyPlugin extends Plugin {
 						//decrypt button pressed
 						case "decrypt":
 
+							//first we parse the file key stuff
+							let textCommentSplit = text.split('%%');
+							//filekey:
+							fileKey = textCommentSplit[1].trim();
+							
+							fileKey = fileKey.replace("fileKey-", "");
+							fileKey  = Buffer.from(fileKey, 'hex');
+							console.log("hex file key - " + fileKey);
+							if(fileKey.length != 16) { 	  //fileKey should always be 16 digits for now (128 bit encryption, 8 bits a byte)
+								new Notice('File key is incorrect.');
+								throw 'Error in file key!';
+							}
+							//content:
+							console.log("2" + fileKey);
+							let content = textCommentSplit[2].trim();
+							
+							//console.log(fileKey);
+							//console.log(content);
+						
+							//fileKey is hex IV
+							iv = fileKey;
+							//text without the fileKey
+							text = content;
 
 							//gets cipher with the hash (from password) and the IV (random seed)
 							const decipher = crypto.createDecipheriv(aesAlgorithm, hash, iv);
@@ -154,7 +186,7 @@ export default class MyPlugin extends Plugin {
 							view.editor.replaceSelection(decText, selection);
 							new Notice('Decrypted', 1); 
 
-							
+							 
 							if(result != null) {
 								result = null;
 							}
