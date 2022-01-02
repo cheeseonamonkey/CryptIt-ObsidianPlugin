@@ -1,7 +1,11 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable no-case-declarations */
+/* eslint-disable prefer-const */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-empty */
 /* eslint-disable no-mixed-spaces-and-tabs */
+import { BasePrivateKeyEncodingOptions } from 'crypto';
 import { App, Editor, MarkdownView, Modal, addIcon, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
-
-
 
 // Remember to rename these classes and interfaces!
 
@@ -26,70 +30,188 @@ export default class MyPlugin extends Plugin {
 		
 		(evt: MouseEvent) =>
 		{
+			
 			//this is called when the user clicks the icon
-			
-			const crypto = require('crypto');
-			const aesAlgorithm = "aes-128-gcm";
-			
-			 
 
-			//open modal for password entry
-			new MyInputModal(this.app, (result) =>
+			const utf8 = require('utf8');
+			const crypto = require('crypto');
+
+			const aesAlgorithm = "aes-128-gcm";
+			//view to get editor:
+			const view = this.app.workspace.getActiveViewOfType(MarkdownView);
+
+			let hash;
+
+			let text = view.editor.getSelection();
+
+			/*
+			if(text != null && text !== "") {
+				text = utf8.encode(text);
+			}
+			*/
+			
+			
+			
+			let view_mode = view.getMode();
+			
+			if(view_mode === 'preview')
 			{
+				new Notice("Cannot do this in preview mode.");
+
+			}else if(view_mode === 'source')
+			{
+				if(text == null || text === "")
+				{
+					new Notice("Nothing is selected!"); 
+
+				}else
+				{
+					//checks good
+					const selection = view.editor.getSelection();
+					
+
+					//open modal for password entry
+			new PasswordInputModal(this.app, (result, mode) =>
+			{
+				
 				//callback after the password is entered
 				
-				let hash = crypto.createHash('md5', result).digest('hex').substring(0,16);
 
-				//console.log('hashed key from password - ' + hash);
+				
+				
 				
 
-				iv = crypto.randomBytes(16);
-				const text = "this is a message from alex."; 
 							
 				try {
 				
+						//console.log('unencrypted text - ' + text + "\n");
+						console.log("1");
+					hash = crypto.createHash('md5', result).digest('hex').substring(0,16);
 						//console.log('hashed key from password - ' + hash);
+
+					//random
+					let iv = crypto.randomBytes(16);
 						//console.log('iv - ' + iv);
-						//console.log('text - ' + text + "\n");	
 						
+					switch(mode) {
+						
+						//encrypt button pressed
+						case "encrypt":
+							
+							//gets cipher with the hash (from password) and the IV (random seed)
+							let cipher = crypto.createCipheriv(aesAlgorithm, hash, iv);
 
+							//encrypt the text:
+							let encText = cipher.update(text, 'utf8', 'hex');
+							//encText += cipher.final();
 
-						const cipher = crypto.createCipheriv(aesAlgorithm, hash, iv);
-						const decipher = crypto.createDecipheriv(aesAlgorithm, hash, iv);
+							console.log('encrypted text: ' + encText);
+
+							//editor actions: 
+							view.editor.replaceSelection(encText, selection);
+
+							new Notice('Encrypted', 1);
 						
-						
-		
-						let encText = cipher.update(text, 'utf8', 'hex');
-						console.log('encrypted text: ' + encText);
-						
-						let decText = decipher.update(encText, 'hex', 'utf8');
-						console.log('decrypted text: ' + decText);
-				
-								
-							}catch(e) {
-								console.log('ERROR!! - ' + e);
+							if(result != null) {
+								result = null;
+							}
+							if(hash != null) {
+								hash = null;
+							}
+							if(cipher != null) {
+								cipher = null;
+							}
+							if(encText != null) {
+								encText = null;
+							}
+							if(text != null) {
+								text = null;
 							}
 							
 
+
 							
+
+						break;
+		
+						//decrypt button pressed
+						case "decrypt":
+
+
+							//gets cipher with the hash (from password) and the IV (random seed)
+							const decipher = crypto.createDecipheriv(aesAlgorithm, hash, iv);
+
+							//decrypt the text:
+							let decText = decipher.update(text, 'hex', 'utf8');
+
+							//decText += decipher.final();
+
+							decText = utf8.encode(decText);
+
+							console.log('decrypted text: ' + decText);
+
+							//editor actions: 
+							view.editor.replaceSelection(decText, selection);
+							new Notice('Decrypted', 1); 
+
 							
-							
+							if(result != null) {
+								result = null;
+							}
+							if(hash != null) {
+								hash = null;
+							}
+							if(cipher != null) {
+								cipher = null;
+							}
+							if(encText != null) {
+								encText = null;
+							}
+							if(text != null) {
+								text = null;
+							}
+							if(decText != null) {
+								decText = null;
+							}
+
+						break;
+		
+						default:	
+
+					}//end switch if
+					
 				
 							
+				}catch(e) {
+					console.log('Error -\t' + e);
+				}
+				
+			}).open();
+			
+			
+					
+
+
+				}//end text selection if
+			}//end require edit if
 
 
 
-							
-						}).open();
+ 
+
 			
 			
-			
-					});
+		},//end of click callback
+
+		
+
+					
+		);
 			
 					
 				
 				
-				
+				//?
 				// Perform additional things with the ribbon
 				ribbonIconEl.addClass('my-plugin-ribbon-class');
 				
@@ -97,23 +219,11 @@ export default class MyPlugin extends Plugin {
 				
 				
 				
-				// my command
-				this.addCommand({
-					id: 'obsidian-test-alert',
-					name: 'TEST ALERT',
-					callback: () => {
-						 
-						new MyInputModal(this.app, (result) =>
-						{
-							console.log(result);
-						}).open();
-
-					}
-				});
 				
 
 				
-				/*
+			/*			EDITOR CALLBACK 
+			
 				// This adds an editor command that can perform some operation on the current editor instance
 				this.addCommand({
 					id: 'sample-editor-command',
@@ -129,10 +239,11 @@ export default class MyPlugin extends Plugin {
 				
 				
 				
-				
+				/*
 				// This adds a settings tab so the user can configure various aspects of the plugin
 				this.addSettingTab(new SampleSettingTab(this.app, this));
-				
+				*/
+
 				// If the plugin hooks up any global DOM events (on parts of the app that doesn't belong to this plugin)
 				// Using this function will automatically remove the event listener when this plugin is disabled.
 				this.registerDomEvent(document, 'click', (evt: MouseEvent) => {
@@ -157,13 +268,19 @@ export default class MyPlugin extends Plugin {
 		}
 		
 
-		export class MyInputModal extends Modal {
 
-			result: string; 
-  			onSubmit: (result: string) => void;
+		export class PasswordInputModal extends Modal
+		{
+			
 
+			enteredPw: string;
+			mode: string;
 
-			constructor(app: App, onSubmit: (result: string) => void) {
+  			onSubmit: (result: string, mode: string) => void;
+
+			
+
+			constructor(app: App, onSubmit: (result: string, mode: string) => void) {
 				super(app);
 				this.onSubmit = onSubmit;
 			  }
@@ -172,32 +289,67 @@ export default class MyPlugin extends Plugin {
 				const { contentEl } = this;
 
 
-    contentEl.createEl("h1", { text: "Password: " });
-
-
-    new Setting(contentEl)
-      .setName("Name")
-      .addText((text) =>
-        text.onChange((value) => {
-          this.result = value
-        }));
-
-
-    new Setting(contentEl)
-      .addButton((btn) =>
-        btn
-          .setButtonText("Submit")
-          .setCta()
-          .onClick(() => {
-            this.close();
-            this.onSubmit(this.result);
-          }));
-			}
 			
-			onClose() {
-				const {contentEl} = this;
-				contentEl.empty();
-			}
+
+			//contentEl.createEl();
+
+				//label
+				contentEl.createEl("h3", { text: "Seed password:" });
+
+				contentEl.createEl("br");
+
+				//pw box
+				let txtPw = contentEl.createEl('input', { type:'text' })
+				txtPw.addEventListener('change', (value) => { 
+					 this.enteredPw = txtPw.value; });
+
+
+				contentEl.createEl("br");
+				
+				//decrypt btn
+				let btnDec = contentEl.createEl('input', { type:'button', cls: 'crypto_button', value: 'decrypt', });
+				btnDec.addEventListener('click', () =>
+				{
+					if((this.enteredPw != null) && (this.enteredPw !== ""))
+					{
+						this.onSubmit(this.enteredPw, "decrypt");
+						this.close();
+
+					}else 
+					{	//no password
+						new Notice("Enter a seed password");
+					}
+				}); 
+
+				//encrypt button
+				let btnEnc = contentEl.createEl('input', { type:'button', cls: 'crypto_button', value: 'encrypt', });
+				btnEnc.addEventListener('click', () =>
+				{
+					if((this.enteredPw != null) && (this.enteredPw !== ""))
+					{
+						this.onSubmit(this.enteredPw, "encrypt");
+						this.close();
+
+					}else 
+					{	//no password
+						new Notice("Enter a seed password");
+					}
+				});
+					
+
+
+		
+
+			
+
+
+			}//end onOpen()  
+
+			
+		onClose() {
+			const {contentEl} = this; 
+			contentEl.empty();
+		} 
 		}
 
 
@@ -215,7 +367,7 @@ export default class MyPlugin extends Plugin {
 				
 				containerEl.empty();
 				
-				containerEl.createEl('h2', {text: 'No settings.'});
+				containerEl.createEl('h2', {text: 'The settings have been misplaced.'});
 				
 				
 				}
