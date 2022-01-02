@@ -19,5 +19,10 @@
 		"obsidian": "^0.12.17",
 		"tslib": "2.3.1",
 		"typescript": "4.4.4"
+	},
+	"dependencies": {
+		"bcryptjs": "^2.4.3",
+		"crypto": "^1.0.1",
+		"node-popup": "^0.1.14"
 	}
 }
