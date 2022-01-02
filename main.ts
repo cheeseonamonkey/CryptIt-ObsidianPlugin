@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 import { App, Editor, MarkdownView, Modal, addIcon, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
 
 
@@ -22,6 +23,7 @@ export default class MyPlugin extends Plugin {
 		// This creates an icon in the left ribbon.
 		const ribbonIconEl = this.addRibbonIcon('blocks',
 		'Sample Plugin', 
+		
 		(evt: MouseEvent) =>
 		{
 			//this is called when the user clicks the icon
@@ -29,31 +31,26 @@ export default class MyPlugin extends Plugin {
 			const crypto = require('crypto');
 			const aesAlgorithm = "aes-128-gcm";
 			
-						
-			let enteredPassword;
+			 
 
-			//open modal for password:
+			//open modal for password entry
 			new MyInputModal(this.app, (result) =>
 			{
-				//callback after password is entered
-
+				//callback after the password is entered
 				
 				let hash = crypto.createHash('md5', result).digest('hex').substring(0,16);
 
 				//console.log('hashed key from password - ' + hash);
 				
 
-				const iv = crypto.randomBytes(16);
+				iv = crypto.randomBytes(16);
 				const text = "this is a message from alex."; 
-							
-							//			console.log('' + '');
 							
 				try {
 				
-						console.log('starting AES...\n_______________________');
-						console.log('hashed key from password - ' + hash);
-						console.log('iv - ' + iv);
-						console.log('text - ' + text + "\n");	
+						//console.log('hashed key from password - ' + hash);
+						//console.log('iv - ' + iv);
+						//console.log('text - ' + text + "\n");	
 						
 
 
