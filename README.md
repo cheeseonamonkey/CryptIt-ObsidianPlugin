@@ -104,6 +104,7 @@ Note that if you have *File Recovery* or some simliar plugin enabled, versions o
 
 
 2. Click the ribbon icon or run the `Crypt-It` command to bring up the dialog modal:
+
 	![Pasted image 20220102185346](https://user-images.githubusercontent.com/54555500/147898363-54cac967-a6f8-4645-b4b9-2a7a33535705.png)
 
 	
