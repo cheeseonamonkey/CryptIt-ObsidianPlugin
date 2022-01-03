@@ -14,7 +14,7 @@ Uses **128-bit** AES encryption by [GCM](https://en.wikipedia.org/wiki/Galois/Co
 
 While it is said that brute-forcing 128-bit encryption with modern hardware would take [billions of years](https://medium.com/@drgutteridge/whats-the-deal-with-encryption-strength-is-128-bit-encryption-enough-or-do-you-need-more-3338b53f1e3d), this is my first attempt at any cryptographic functioning, my first Obsidian plugin, and even my first time using Node.js - so it is entirely ~~possible~~ probable for my code to have a few security flaws.
 
-The crypto IV is stored basically in plain text but passwords are hashed. 
+The crypto IV is stored basically in plain text but passwords are hashed every time, from the user-inputted passphrase. 
 
 So as of this version I would be wary of using this plugin to encrypt anything of which secrecy is of the utmost importance (*passwords, incriminating information, nuclear launch codes, etc.*).
 
