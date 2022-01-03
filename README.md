@@ -75,6 +75,7 @@ Encrypted data consists of 3 parts:
 
 
 2. Click the ribbon icon or run the `Crypt-It` command to bring up the dialog modal:
+
 	![Pasted image 20220102185346](https://user-images.githubusercontent.com/54555500/147898249-b19b1df8-3009-481c-8b02-c73da0baf9af.png)
 
 	
@@ -83,9 +84,10 @@ Encrypted data consists of 3 parts:
 4. The selected text will be encrypted and replaced:
 	![Pasted image 20220102195003](https://user-images.githubusercontent.com/54555500/147898278-1fa5c4f2-1b9e-4298-ac9a-e7acc4ebe67c.png)
 	
-	*(the `cryptoKey` will be generated and prepended to the top of the encrypted text)*
+	*(the `cryptoKey` will be generated, and prepended to the top of the encrypted text)*
 
 5. Your text is now encrypted, and your dirty secrets safe!   :)
+
 	![Pasted image 20220102195129](https://user-images.githubusercontent.com/54555500/147898346-b58982f2-ab9c-4fec-b55a-3734643c5420.png)
 
 	
