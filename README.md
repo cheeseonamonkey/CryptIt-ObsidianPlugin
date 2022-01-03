@@ -39,6 +39,10 @@ Encrypted data consists of 3 parts:
 
 ![Pasted image 20220102192331](https://user-images.githubusercontent.com/54555500/147898428-31b59f40-850e-406e-8af7-146a887c2c64.png)
 
+- **When decrypting,** 2 of these 3 parts (text content & cryptoCode) are already present - we just need to supply the hash.
+- **When encrypting,** the text content is already present, and the cryptoKey is generated on the fly. We supply the hash. 
+
+
 
 #### Text content
 - the text content to encrypt/decrypt
