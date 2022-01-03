@@ -129,7 +129,7 @@ Encrypted data consists of 3 parts:
 
 ```markdown
 
-\%\% cryptoCode-[CRYPTO_CODE_WITHOUT_BRACKETS] \%\%
+%% cryptoCode-[CRYPTO_CODE_WITHOUT_BRACKETS] %%
 
 encryptedtextcontentencryptedtextcontentencryptedtextcontent 
 
