@@ -26,46 +26,7 @@ To use, you must first be selecting some text, and in editor mode.
 Then, by clicking the icon on the left ribbon bar, or by running the  `Crypt-It`  command, the Crypt-It dialog modal will appear:
 ![Pasted image 20220102185346](https://user-images.githubusercontent.com/54555500/147898434-be6ffc8b-7e8e-4e81-b278-efdc9c609818.png)
 
-
 When you click one of the buttons, the password in the text field will be hashed into the 128-bit cryptographic key, and the currently selected text will be replaced.
-
-### **Parts of Crypt-It data:**
----
-
-Encrypted data consists of 3 parts:
-- The text content to encrypt/decrypt
-- the `cryptoCode` that stays with the text content
-- the hash obtained from the seed password
-
-![Pasted image 20220102192331](https://user-images.githubusercontent.com/54555500/147898428-31b59f40-850e-406e-8af7-146a887c2c64.png)
-
-- **When decrypting,** 2 of these 3 parts (text content & cryptoCode) are already present - we just need to supply the hash.
-- **When encrypting,** the text content is already present, and the cryptoKey is generated on the fly. We supply the hash. 
-
-
-
-#### Text content
-- the text content to encrypt/decrypt
-- should be below the `cryptoCode`
-
-
-#### **a '`cryptoCode`' value**:
-- unique to each encryption
-- is stored with the encrypted data (in the file) just before the encrypted text:
-	- enclosed with comment tags (\%\%) on either side
-	- designated with `cryptoCode-`
-	-  automatically gets prepended when encrypting and parsed when decrypting - you shouldn't have to worry about it manually
-	-  always 16 bytes (128 bits)
--  *(is really just a hex representation of the crypto [IV](https://en.wikipedia.org/wiki/Initialization_vector))*
-
-
-
-#### **hash / seed password**:
-- password hashed then used as the crypto key
-- is not stored at all - gets hashed from seed input every time
-
-
-
 
 ### Encrypting
 ---
@@ -124,6 +85,44 @@ Note that if you have *File Recovery* or some simliar plugin enabled, versions o
 
 
 - *Note that if you have *File Recovery* or some simliar plugin enabled, versions of your unencrypted text may have been backed up elsewhere.*
+
+
+### **Parts of Crypt-It data:**
+---
+
+Encrypted data consists of 3 parts:
+- The text content to encrypt/decrypt
+- the `cryptoCode` that stays with the text content
+- the hash obtained from the seed password
+
+![Pasted image 20220102192331](https://user-images.githubusercontent.com/54555500/147898428-31b59f40-850e-406e-8af7-146a887c2c64.png)
+
+
+- **When decrypting,** 2 of these 3 parts (text content & cryptoCode) are already present - we just need to supply the hash.
+- **When encrypting,** the text content is already present, and the cryptoKey is generated on the fly. We supply the hash. 
+
+
+#### Text content
+- the text content to encrypt/decrypt
+- after `cryptoCode` in comment (\%\%) 
+
+
+#### **a '`cryptoCode`' value**:
+- unique to each encryption
+- is stored with the encrypted data (in the file) just before the encrypted text:
+	- enclosed with comment tags (\%\%) on either side
+	- designated with `cryptoCode-` + IV as a hex string
+	- gets prepended when encrypting, and parsed again to use when decrypting - you shouldn't have to worry about it manually
+	- always 16 bytes (128 bits)
+-  *(is really just a hex representation of the crypto [IV](https://en.wikipedia.org/wiki/Initialization_vector))*
+
+
+
+#### **seed password**:
+- password hashed then used as the crypto key
+- is not stored at all - gets hashed from seed input every time
+
+
 
 
 
