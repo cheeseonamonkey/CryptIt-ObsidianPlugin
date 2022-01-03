@@ -135,4 +135,4 @@ In the Obsidian Community Plugins?
 	- [Me](www.alexanderhuso.wordpress.com) on WordPress
 - [Node.JS](https://nodejs.org/en/)
 	- [crypto](https://nodejs.org/api/crypto.html)
-- Thanks a lot to [Marcus O.](https://github.com/marcusolsson), who maintains the unofficial *[Obsidian Plugin Developer Docs](https://marcus.se.net/obsidian-plugin-docs/)*.
+- Thanks a lot to the dude who maintains the unofficial *[Obsidian Plugin Developer Docs](https://marcus.se.net/obsidian-plugin-docs/)*.
