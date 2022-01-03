@@ -127,6 +127,8 @@ Encrypted data consists of 3 parts:
 ## Example
 ---
 
+required format to parse for decryption:
+
 ```markdown
 
 %% cryptoCode-[CRYPTO_CODE_WITHOUT_BRACKETS] %%
@@ -134,6 +136,11 @@ Encrypted data consists of 3 parts:
 encryptedtextcontentencryptedtextcontentencryptedtextcontent 
 
 ```
+
+Correct formatting will output automatically when encrypting.
+
+You must select the entire cryptoCode and the entire text contents. 
+
 
 ### Credits
 ---
