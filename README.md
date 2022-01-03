@@ -24,7 +24,8 @@ I do plan to update soon with more-robust encryption and better features.
 To use, you must first be selecting some text, and in editor mode.
 
 Then, by clicking the icon on the left ribbon bar, or by running the  `Crypt-It`  command, the Crypt-It dialog modal will appear:
->![[Pasted image 20220102185346.png]]
+![Pasted image 20220102185346](https://user-images.githubusercontent.com/54555500/147898434-be6ffc8b-7e8e-4e81-b278-efdc9c609818.png)
+
 
 When you click one of the buttons, the password in the text field will be hashed into the 128-bit cryptographic key, and the currently selected text will be replaced.
 
@@ -36,7 +37,8 @@ Encrypted data consists of 3 parts:
 - the `cryptoCode` that stays with the text content
 - the hash obtained from the seed password
 
-![Pasted image 20220102185346](https://user-images.githubusercontent.com/54555500/147898236-9ec5f53e-2025-4f79-b3c1-5c1756f273c7.png)
+![Pasted image 20220102192331](https://user-images.githubusercontent.com/54555500/147898428-31b59f40-850e-406e-8af7-146a887c2c64.png)
+
 
 #### Text content
 - the text content to encrypt/decrypt
