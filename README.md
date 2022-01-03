@@ -5,7 +5,7 @@
 
 I frequently would find myself hesitant to store sensitive information on [Obsidian](https://obsidian.md/). So after not finding a good encryption plugin, I took a stab at making my own.
 
-*Currently isn't working for me on Android? Can anyone confirm? Will try to fix that ASAP.*
+*Currently isn't working for me on Android?*
 
 ### Encryption specifications
 ---
