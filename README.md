@@ -90,15 +90,15 @@ Note that if you have *File Recovery* or some simliar plugin enabled, versions o
 ---
 
 Encrypted data consists of 3 parts:
-- The text content to encrypt or decrypt
-- the `cryptoCode` that stays with the text content
-- the hash from the password entry
+- The **text content** to encrypt or decrypt
+- the **`cryptoCode`** that stays with the text content
+- the hash from the **password** entry
 
 ![Pasted image 20220102192331](https://user-images.githubusercontent.com/54555500/147898428-31b59f40-850e-406e-8af7-146a887c2c64.png)
 
 
-So **when decrypting,** 2 of these 3 parts (text content & cryptoCode) are already present - we just need to supply the password.
-And **When encrypting,** the text content is selected, the cryptoKey is generated, and we supply the password. 
+- **When decrypting,** 2 of these 3 parts (text content & cryptoCode) are already present - we just need to supply the password, 
+- and **when encrypting,** the text content is selected, the cryptoKey is generated, and we supply the password. 
 
 
 #### Text content
@@ -107,6 +107,7 @@ And **When encrypting,** the text content is selected, the cryptoKey is generate
 
 #### **a '`cryptoCode`' value**:
 - unique to each encryption
+- before text content
 - is stored with the encrypted data (in the file) just before the encrypted text:
 	- enclosed with comment tags (\%\%) on either side
 	- designated with `cryptoCode-` + IV as a hex string
@@ -122,9 +123,20 @@ And **When encrypting,** the text content is selected, the cryptoKey is generate
 
 
 
-## Misc
+
+## Example
 ---
 
+```markdown
+
+\%\% cryptoCode-[CRYPTO_CODE_WITHOUT_BRACKETS] \%\%
+
+encryptedtextcontentencryptedtextcontentencryptedtextcontent 
+
+```
+
+### Credits
+---
 Source code and releases [on Github](https://github.com/cheeseonamonkey/obsPlug) 
 
 In the Obsidian Community Plugins?
