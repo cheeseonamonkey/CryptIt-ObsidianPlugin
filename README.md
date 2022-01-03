@@ -48,14 +48,13 @@ When you click one of the buttons, the password in the text field will be hashed
 4. The selected text will be encrypted and replaced:
 	![Pasted image 20220102195003](https://user-images.githubusercontent.com/54555500/147898278-1fa5c4f2-1b9e-4298-ac9a-e7acc4ebe67c.png)
 	
-	*(the `cryptoKey` will be generated, and prepended to the top of the encrypted text)*
+    - the `cryptoKey` will be generated, and prepended to the top of the encrypted text, nested in comments (\%\%) 
 
-5. Your text is now encrypted, and your dirty secrets safe!   :)
+5. Your text is now encrypted, and your secrets safe! 
 
 	![Pasted image 20220102195129](https://user-images.githubusercontent.com/54555500/147898346-b58982f2-ab9c-4fec-b55a-3734643c5420.png)
 
 	
-
 
 Note that if you have *File Recovery* or some simliar plugin enabled, versions of your unencrypted text may have been backed up.
 
@@ -82,7 +81,6 @@ Note that if you have *File Recovery* or some simliar plugin enabled, versions o
 
 
 5. Your text is now decrypted!
-	
 
 
 - *Note that if you have *File Recovery* or some simliar plugin enabled, versions of your unencrypted text may have been backed up elsewhere.*
@@ -92,21 +90,20 @@ Note that if you have *File Recovery* or some simliar plugin enabled, versions o
 ---
 
 Encrypted data consists of 3 parts:
-- The text content to encrypt/decrypt
+- The text content to encrypt or decrypt
 - the `cryptoCode` that stays with the text content
-- the hash obtained from the seed password
+- the hash from the password entry
 
 ![Pasted image 20220102192331](https://user-images.githubusercontent.com/54555500/147898428-31b59f40-850e-406e-8af7-146a887c2c64.png)
 
 
-- **When decrypting,** 2 of these 3 parts (text content & cryptoCode) are already present - we just need to supply the hash.
-- **When encrypting,** the text content is already present, and the cryptoKey is generated on the fly. We supply the hash. 
+So **when decrypting,** 2 of these 3 parts (text content & cryptoCode) are already present - we just need to supply the password.
+And **When encrypting,** the text content is selected, the cryptoKey is generated, and we supply the password. 
 
 
 #### Text content
 - the text content to encrypt/decrypt
 - after `cryptoCode` in comment (\%\%) 
-
 
 #### **a '`cryptoCode`' value**:
 - unique to each encryption
@@ -114,14 +111,12 @@ Encrypted data consists of 3 parts:
 	- enclosed with comment tags (\%\%) on either side
 	- designated with `cryptoCode-` + IV as a hex string
 	- gets prepended when encrypting, and parsed again to use when decrypting - you shouldn't have to worry about it manually
-	- always 16 bytes (128 bits)
--  *(is really just a hex representation of the crypto [IV](https://en.wikipedia.org/wiki/Initialization_vector))*
-
-
+	- always 16 bytes (128 bits) of hex 
+-  *( really a representation of the crypto [IV]())*
 
 #### **seed password**:
 - password hashed then used as the crypto key
-- is not stored at all - gets hashed from seed input every time
+- is not stored at all - gets hashed from password input every time
 
 
 
