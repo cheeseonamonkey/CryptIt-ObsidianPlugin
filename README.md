@@ -100,7 +100,8 @@ Note that if you have *File Recovery* or some simliar plugin enabled, versions o
 1. Select some text you would like to decrypt, including the `cryptoKey`:
 	![Pasted image 20220102201755](https://user-images.githubusercontent.com/54555500/147898367-68ab8312-77cc-4e4c-880e-6f984056a689.png)
 
-	*(any white space will get automatically trimmed!)*
+	- include the cryptoKey in your selection to be parsed
+	- *any white space will get automatically trimmed*
 
 
 2. Click the ribbon icon or run the `Crypt-It` command to bring up the dialog modal:
