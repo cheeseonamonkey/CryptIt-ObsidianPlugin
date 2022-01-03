@@ -14,9 +14,9 @@ Uses **128-bit** AES encryption by [GCM](https://en.wikipedia.org/wiki/Galois/Co
 
 While it is said that brute-forcing 128-bit encryption with modern hardware would take [billions of years](https://medium.com/@drgutteridge/whats-the-deal-with-encryption-strength-is-128-bit-encryption-enough-or-do-you-need-more-3338b53f1e3d), this is my first attempt at any cryptographic functioning, my first Obsidian plugin, and even my first time using Node.js - so it is entirely ~~possible~~ probable for my code to have a few security flaws.
 
-And so, as of *this* version, I would be wary of using this plugin to encrypt anything of which secrecy is of the utmost importance (*passwords, incriminating information, nuclear launch codes, etc.*).
+The crypto IV is stored basically in plain text but passwords are hashed. 
 
-I do plan to update soon with more-robust encryption and better features.
+So as of this version I would be wary of using this plugin to encrypt anything of which secrecy is of the utmost importance (*passwords, incriminating information, nuclear launch codes, etc.*).
 
 ## Usage
 ---
@@ -26,7 +26,8 @@ To use, you must first be selecting some text, and in editor mode.
 Then, by clicking the icon on the left ribbon bar, or by running the  `Crypt-It`  command, the Crypt-It dialog modal will appear:
 ![Pasted image 20220102185346](https://user-images.githubusercontent.com/54555500/147898434-be6ffc8b-7e8e-4e81-b278-efdc9c609818.png)
 
-When you click one of the buttons, the password in the text field will be hashed into the 128-bit cryptographic key, and the currently selected text will be replaced.
+When you click one of the buttons, the password in the text field will be hashed into the 128-bit cryptographic key, the text will be encrypted/decrypted, and the currently selected text will be replaced
+
 
 ### Encrypting
 ---
