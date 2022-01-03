@@ -71,7 +71,9 @@ Encrypted data consists of 3 parts:
 ---
 
 1. Select some text you would like to encrypt:
-	![Pasted image 20220102201755](https://user-images.githubusercontent.com/54555500/147898263-c5dd6dbb-c120-43ca-82a5-ad59e6f0fd61.png)
+	
+	![Pasted image 20220102194700](https://user-images.githubusercontent.com/54555500/147898670-585fe7d8-a0b5-4add-a619-6cc5117331ea.png)
+
 
 
 2. Click the ribbon icon or run the `Crypt-It` command to bring up the dialog modal:
